@@ -10,6 +10,24 @@
 			<th>introduction</th>
 			<th><%= user.introduction %></th>
 		</tr>
+
+		<tr>
+			<th>フォローしている数</th>
+			<th>
+				<a href="<%= following_user_path(user) %>">
+					<%= user.followings.count %>
+				</a>
+			</th>
+		</tr>
+
+		<tr>
+		  <th>フォローされている数</th>
+		  <th>
+				<a href="<%= followers_user_path(@user) %>">
+				<%= user.followers.count %>
+				</a>
+			</th>
+		</tr>
 </table>
 
 <div class="row">

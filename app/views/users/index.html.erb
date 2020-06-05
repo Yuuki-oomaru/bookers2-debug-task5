@@ -4,6 +4,7 @@
 			<h2>User info</h2>
 			<%= render 'users/profile', user: current_user %>
 			<!--メモ　右側の指定に注意。そこを間違えるとエラーが発生して表示されない -->
+			<%= render 'relationships/follow_button', user: @user %>
 
 			<h2>New book</h2>
 			<%= render 'books/newform', book: @book %>
@@ -26,6 +27,21 @@
 				<tr>
 					<td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></td>
 					<td><%= user.name%></td>
+					<td>フォロワー数</td>
+					<td>
+            <% if current_user.followings?(@user) %>
+					    <%= form_with url: relationship_path(@user) , method: :delete do |f| %>
+							<%= f.hidden_field :follow_id, :value => @user.id %>
+              <%= f.submit "Unfollow", class: "btn btn-large follow-btn" %>
+							<% end %>
+            <% else %>
+							<%= form_with url: relationships_path do |f| %>
+               <div><%= f.hidden_field :follow_id, :value => @user.id %></div>
+              <%= f.submit "Follow", class: "btn btn-large btn-primary follow-btn" %>
+              <% end %>
+            <% end %>
+					</td>
+					<td><%= user.followers.count %></td>
 					<td><%= link_to "Show", user, class: "user_#{user.id}" %></td>
 				</tr>
 				<% end %>
