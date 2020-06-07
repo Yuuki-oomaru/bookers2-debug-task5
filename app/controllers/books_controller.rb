@@ -52,8 +52,8 @@ class BooksController < ApplicationController
   	redirect_to books_path, notice: "successfully delete book!"
   end
 
-  private
 
+  private
   def book_params
   	params.require(:book).permit(:title, :body)
   end
